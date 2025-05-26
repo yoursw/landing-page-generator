@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{product_name}} | {{store_name}}</title>
+    <meta name="description" content="{{description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2F80ED;
+            --text: #333333;
+            --light-bg: #F9F9F9;
+            --border: #E0E0E0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .product-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+            margin: 40px 0;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .gallery img:hover {
+            opacity: 0.8;
+        }
+
+        .product-details h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .cta {
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .cta:hover {
+            background-color: #2563eb;
+        }
+
+        .stock-alert {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff3cd;
+            color: #856404;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .product-hero {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-details h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">{{store_name}}</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="product-hero">
+            <!-- Image column -->
+            <div>
+                <img src="{{main_image}}" alt="{{MiddleSeek_alt_text}}" class="product-image" loading="lazy">
+                <div class="gallery">
+                    {% for image in gallery_images %}
+                    <img src="{{image}}" alt="{{MiddleSeek_alt_text}}" loading="lazy">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Details column -->
+            <div class="product-details">
+                <h1>{{product_name}}</h1>
+                <p class="description">{{description}}</p>
+                <p class="price">{{price}}</p>
+                <button class="cta">Add to Cart</button>
+                {% if stock_quantity < 20 %} <p class="stock-alert">Only {{stock_quantity}} units remaining</p>
+                    {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Ethically powered by MiddleSeek</p>
+    </footer>
+
+    <script>
+        // Simple image gallery functionality
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                document.querySelector('.product-image').src = img.src;
+            });
+        });
+    </script>
+</body>
+
+</html>
